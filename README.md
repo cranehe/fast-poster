@@ -1,68 +1,134 @@
-## fastposter电商海报生成器
+<p align="center"><a href="https://fastposter.net/doc/" target="_blank"><img width="168" src="https://fastposter.net/dassets/dragonfly2x.png" alt="fast-poster logo"></a></p>
 
-> 一分钟即可完成海报开发
+<p align="center">
+  <a href="https://gitcode.com/psoho/fast-poster" class="link github-link" target="_blank"><img style="max-width: 100px;" alt="Gitcode Repo stars" src="https://gitcode.com/psoho/fast-poster/star/badge.svg"></a>
+  <a href="https://github.com/psoho/fast-poster" class="link github-link" target="_blank"><img style="max-width: 100px;" alt="GitHub Repo stars" src="https://img.shields.io/github/stars/psoho/fast-poster?style=social"></a>
+  <a href="https://gitee.com/psoho/fast-poster" class="link gitee-link" target="_blank"><img style="max-width: 100px;" alt="gitee Repo stars" src="https://gitee.com/psoho/fast-poster/badge/star.svg"></a>
+  <img alt="csharp" src="https://img.shields.io/badge/language-python-yellow.svg">
+  <img alt="csharp" src="https://img.shields.io/badge/language-vue-brightgreen.svg">
+  <img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg">
+  <img alt="version" src="https://img.shields.io/badge/version-2.19.1-brightgreen">
+</p>
 
-🔥🔥🔥 fastposter海报生成器，电商海报编辑器，电商主图编辑器，电商海报设计器，fast快速生成海报 海报制作 海报开发。二维码海报，图片海报，分享海报，二维码推广海报，支持Java Python PHP Go JS 小程序。基于Vue 和Pillow 
+## 介绍
+
+fastposter海报生成器是一款快速开发海报的工具。只需上传一张背景图，在对应的位置放上组件（`文字`、`图片`、`二维码`、`头像`）即可生成海报。 点击`代码`直接生成各种语言SDK的调用代码，方便快速开发。
+
+现已服务众多电商类项⽬，多个项⽬有`80W+`⽤户，通过多年⽣产环境的考验，稳定可靠。广泛应用于各类电商、分销系统、电商海报、电商主图等海报生成和制作场景。
+
+> 如果项目有帮到您，请点亮你点亮的小星星
+
+## 文档
+
+- 开发文档：[https://fastposter.net/doc/](https://fastposter.net/doc/)
+- Java专业版-在线体验：[https://fastposter.net/demo/java/](https://fastposter.net/demo/java/)
+- Python专业版-在线体验：[https://fastposter.net/demo/python/](https://fastposter.net/demo/python/)
+- 社区版-在线体验：[https://fastposter.net/demo/open/](https://fastposter.net/demo/open/)
+- 🔥🔥云服务-免费试用：[https://fastposter.net/](https://fastposter.net/)
+
+## 特性
+
+- 支持docker快速部署（支持arm和x86架构）
+- 支持电商级生产环境
+- 主流的SDK支持，方便快速开发 `Java` `Python` `PHP` `Go` `JavaScript` `小程序`
+- 无需编写复杂的绘图渲染代码
+- 支持多种文件格式 `jpeg` `png` `webp` `pdf` `base64`
+- 便捷的代码生成
 
 
-**欢迎点亮小星星，加速项目迭代更新**
+## 快速开始
 
-<a href="https://github.com/psoho/fast-poster" class="link github-link" target="_blank"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/psoho/fast-poster?style=social"></a>
-<a href="https://gitee.com/psoho/fast-poster" class="link gitee-link" target="_blank"><img alt="gitee Repo stars" src="https://gitee.com/psoho/fast-poster/badge/star.svg"></a>
-
-- 开发文档：[https://poster.prodapi.cn/doc/](https://poster.prodapi.cn/doc/)
-- 在线体验：[https://poster.prodapi.cn/](https://poster.prodapi.cn/#from=v2.7.1)
-- 专业版：[https://poster.prodapi.cn/pro/](https://poster.prodapi.cn/pro/#from=v2.7.1)
-
-[comment]: <> "- [代码仓库-github]&#40;https://github.com/psoho/fast-poster&#41;"
-
-[comment]: <> "- [代码仓库-gitee]&#40;https://gitee.com/psoho/fast-poster&#41;"
-
-### 只需三步，即可完成海报开发 `启动服务` > `编辑海报` > `生成代码`
-
-#### 一、启动服务
+### 一、启动服务
 
 ```bash
-docker run --name fast-poster -p 5000:5000 tangweixin/fast-poster
+docker run -it --name fastposter -p 5000:5000 fastposter/fastposter
 ```
 
-#### 二、编辑海报
+### 二、编辑海报
 
-![编辑海报](https://poster.prodapi.cn/doc/assets/image-20220407142530149.png)
+![image-20240320145745417.png](https://fastposter.net/dassets/image-20240320145745417.png)
 
 
-#### 三、生成代码
+### 三、生成代码
 
-![生成代码](https://poster.prodapi.cn/doc/assets/image-20220407142705928.png)
+Java代码
 
-### 适用场景：
+![image-20240320145856100.png](https://fastposter.net/dassets/image-20240320145856100.png)
 
-- 电商主图编辑器
-- 在线作图
+
+```java
+// 进一步了解，请参考开发文档 https://fastposter.net/doc/sdk/
+import net.fastposter.client.FastposterClient;
+import java.util.*;
+
+public class FastposterClientDemo {
+
+    public static void main(String[] args) {
+
+        // 1.创建海报客户端对象
+        FastposterClient client = FastposterClient.builder()
+                .endpoint("http://127.0.0.1:5000")      // 设置接入端点
+                .token("ApfrIzxCoK1DwNZOEJCwlrnv6QZ0PCdv")  // 设置token
+                .build();
+
+        // 2.准备海报参数
+        Map<String, Object> params = new HashMap<>();
+        params.put("NO", "SN88888888");
+
+
+        // 3.生成海报并保存
+        client.buildPoster("6fba72004fa20aee").params(params).build().save();
+
+    }
+
+}
+```
+
+Python 代码
+
+![image-20240320145914360.png](https://fastposter.net/dassets/image-20240320145914360.png)
+
+```python
+# 进一步了解，请参考开发文档 https://fastposter.net/doc/sdk/
+from fastposter import Client
+
+client = Client('ApfrIzxCoK1DwNZOEJCwlrnv6QZ0PCdv', 'http://127.0.0.1:5000')
+params = {
+  "NO": "SN88888888"
+}
+client.buildPoster('6fba72004fa20aee', params=params).save()
+```
+
+响应示例（返回海报图片）
+
+<img width=300 src="https://fastposter.net/dassets/image-20240320153953887.png" />
+
+
+## 适用场景
+
+- 海报生成器
+- 海报自动生成工具
+- 海报在线设计生成器
+- 海报生成器在线制作
+- 生成朋友圈海报
 - 电商海报编辑器
+- 证书制作
+- 证书自动生成工具
+- 二维码分享海报图片
 - Python Pillow绘图 Pillow制作海报
+- 电商主图编辑器
 - Java生成二维码分享海报图片
 - Java Graphics2D绘制海报图片
 - 微信小程序生成海报分享朋友圈
 - PHP生成二维码海报图片
 - 自定义商业海报图片
 - H5生成海报图片
-- 二维码分享海报图片
 - canvas生成海报图片
 - 通过JSON生成海报图片
+- BufferdImage绘制图片
 
+## 社区
 
-[comment]: <> "### 追星之路"
+作者微信`fastposter`
 
-[comment]: <> "[![Stargazers over time]&#40;https://starchart.cc/psoho/fast-poster.svg&#41;]&#40;https://starchart.cc/psoho/fast-poster&#41;"
-
-### 捐赠
-
-如果你觉得 `fastposter` 对你有帮助，或者想对我们微小的工作一点支持，欢迎给我们[捐赠](https://poster.prodapi.cn/doc/guide/donate.html)
-
-### 社区
-
-进群加作者微信`fastposter`
-
-![作者微信二维码](https://poster.prodapi.cn/doc/assets/qrcode.jpeg)
-
+![fastposer作者微信](https://fastposter.net/dassets/qrcode.jpeg)

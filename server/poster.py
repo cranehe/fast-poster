@@ -28,13 +28,12 @@ def fetchImg(url=''):
         r = requests.get(url, timeout=0.2)
         return Image.open(BytesIO(r.content)).convert('RGBA')
     except urllib3.exceptions.ReadTimeoutError:
+        print(f'ERROR: fetch image timeout: url={url}')
+        traceback.print_exc()
         return None
     except Exception:
         traceback.print_exc()
         return NO_IMG
-    except urllib3.exceptions.ReadTimeoutError:
-        print('xxx')
-        return None
 
 
 def drawImg(draw, d, bg):
@@ -51,13 +50,10 @@ def drawImg(draw, d, bg):
 
 
 def drawBg(item):
-    url = str(item['bgUrl'])
-    w = item['w']
-    h = item['h']
-    c = item['bgc']
-    c = '#fafbfc' if c == '' else c
+    url, w, h, c = str(item['bgUrl']), item['w'], item['h'], item['bgc']
+    c = '#fafbfc00' if c == '' else c
     if not url.strip():
-        img = Image.new('RGB', (w, h), c)
+        img = Image.new('RGBA', (w, h), c)
     else:
         img = fetchImg(url)
     img = img.resize((w, h), Image.ANTIALIAS)
@@ -66,8 +62,7 @@ def drawBg(item):
 
 
 def getFont(item):
-    fn = item['fn']
-    size = item['s']
+    fn, size = item['fn'], item['s']
     if fn == "":
         fn = '0d44d315557a4a25.woff'
     font = 'resource/fonts/' + fn
@@ -80,6 +75,10 @@ def wrap_text(text, font, width):
     sb = []
     temp = ''
     for s in text:
+        if s == '\n': # 优化本文中含有换行符
+            sb.append(temp)
+            temp = ''
+            continue
         t = temp + s
         if font.getsize(t)[0] > width:
             sb.append(temp)
@@ -93,12 +92,7 @@ def wrap_text(text, font, width):
 
 def drawText(draw, item, bg):
     font = getFont(item)
-    v = item['v']
-    w = item['w']
-    h = item['h']
-    x = item['x']
-    y = item['y']
-    c = item.get('c', '#010203')
+    v, w, h, x, y, c = item['v'], item['w'], item['h'], item['x'], item['y'], item.get('c', '#010203')
     img = Image.new("RGBA", (w, h), '#fff0')
     draw = ImageDraw.Draw(img)  # type:ImageDraw.ImageDraw
     t = wrap_text(v, font, w)
@@ -108,12 +102,7 @@ def drawText(draw, item, bg):
 
 
 def drawQrCode(draw, item, bg):
-    url = item['v']
-    w = item['w']
-    h = item['h']
-    x = item['x']
-    y = item['y']
-    c = item.get('c', '#010203').strip()
+    url, w, h, x, y, c = item['v'], item['w'], item['h'], item['x'], item['y'], item.get('c', '#010203').strip()
     c = '#010203' if len(c) == 0 else c
     p = item.get('p', 0)
     qr = qrcode.QRCode(
@@ -130,12 +119,7 @@ def drawQrCode(draw, item, bg):
 
 
 def drawAvatar(draw, item, bg):
-    url = item['v']
-    w = item['w']
-    h = item['h']
-    x = item['x']
-    y = item['y']
-    c = item.get('c', '#ffffff').strip()
+    url, w, h, x, y, c = item['v'], item['w'], item['h'], item['x'], item['y'], item.get('c', '#ffffff').strip()
     c = '#ffffff' if len(c) == 0 else c
     im = fetchImg(url)
     if im == None:

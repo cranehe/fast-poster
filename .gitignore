@@ -102,9 +102,6 @@ venv.bak/
 # Rope project settings
 .ropeproject
 
-# mkdocs documentation
-/site
-
 # mypy
 .mypy_cache/
 .dmypy.json
@@ -118,3 +115,15 @@ static/storage
 
 build.sh
 cache.sqlite
+
+#git -c credential.helper= -c core.quotepath=false -c log.showSignature=false fetch github --recurse-submodules=no --progress --prune
+
+design
+*.sh
+
+server/data/store
+.do**
+server/static/static/js/
+server/static/static/css/
+
+docker
